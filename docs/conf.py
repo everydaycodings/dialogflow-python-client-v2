@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# google-cloud-automl documentation build configuration file
+# dialogflow documentation build configuration file
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -20,12 +20,16 @@ import shlex
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath(".."))
 
-__version__ = "0.6.0"
+# For plugins that can not read conf.py.
+# See also: https://github.com/docascode/sphinx-docfx-yaml/issues/85
+sys.path.insert(0, os.path.abspath("."))
+
+__version__ = ""
 
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
-needs_sphinx = "1.6.3"
+needs_sphinx = "1.5.5"
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
@@ -38,20 +42,17 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
+    "recommonmark",
 ]
 
 # autodoc/autosummary flags
 autoclass_content = "both"
-autodoc_default_flags = ["members"]
+autodoc_default_options = {"members": True}
 autosummary_generate = True
 
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
-
-# Allow markdown includes (so releases.md can include CHANGLEOG.md)
-# http://www.sphinx-doc.org/en/master/markdown.html
-source_parsers = {".md": "recommonmark.parser.CommonMarkParser"}
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
@@ -93,7 +94,12 @@ language = None
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ["_build"]
+exclude_patterns = [
+    "_build",
+    "samples/AUTHORING_GUIDE.md",
+    "samples/CONTRIBUTING.md",
+    "samples/snippets/README.rst",
+]
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -133,9 +139,9 @@ html_theme = "alabaster"
 # further.  For a list of options available for each theme, see the
 # documentation.
 html_theme_options = {
-    "description": "Google Cloud Client Libraries for Python",
+    "description": "Google Cloud Client Libraries for dialogflow",
     "github_user": "googleapis",
-    "github_repo": "",
+    "github_repo": "dialogflow-python-client-v2",
     "github_banner": True,
     "font_family": "'Roboto', Georgia, sans",
     "head_font_family": "'Roboto', Georgia, serif",
@@ -164,7 +170,7 @@ html_theme_options = {
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-# html_static_path = []
+html_static_path = ["_static"]
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
@@ -258,7 +264,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, "dialogflow.tex", u"dialogflow Documentation", author, "manual")
+    (master_doc, "dialogflow.tex", u"dialogflow Documentation", author, "manual",)
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -286,7 +292,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, "dialogflow", u"dialogflow Documentation", [author], 1)]
+man_pages = [(master_doc, "dialogflow", u"dialogflow Documentation", [author], 1,)]
 
 # If true, show URL addresses after external links.
 # man_show_urls = False
@@ -325,10 +331,8 @@ texinfo_documents = [
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
     "python": ("http://python.readthedocs.org/en/latest/", None),
-    "gax": ("https://gax-python.readthedocs.org/en/latest/", None),
     "google-auth": ("https://google-auth.readthedocs.io/en/stable", None),
-    "google-gax": ("https://gax-python.readthedocs.io/en/latest/", None),
-    "google.api_core": ("https://googleapis.dev/python/google-api-core/latest", None),
+    "google.api_core": ("https://googleapis.dev/python/google-api-core/latest/", None,),
     "grpc": ("https://grpc.io/grpc/python/", None),
 }
 
